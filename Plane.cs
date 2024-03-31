@@ -65,20 +65,38 @@ namespace laba10.Program
 		{
 			base.Init();
 
-			Console.WriteLine("Введите, пожалуйста, год производства:");
-			PassengersNumber = int.Parse(Console.ReadLine());
+			Console.WriteLine("Введите, пожалуйста, количество пассажиров:");
+			try
+			{
+				PassengersNumber = int.Parse(Console.ReadLine());
+			}
+			catch
+			{
+				PassengersNumber = 100;
+			}
 
-			Console.WriteLine("Введите, пожалуйста, количество членов экипажа:");
-			Range = int.Parse(Console.ReadLine());
+			Console.WriteLine("Введите, пожалуйста, дальность полёта:");
+			try
+			{
+				Range = int.Parse(Console.ReadLine());
+			}
+			catch
+			{
+				Range = 1000;
+			}
+
 		}
 
 		public override void RandomInit()
 		{
 			base.RandomInit();
-
-			Random rnd = new Random();
 			PassengersNumber = rnd.Next(1, 500);
 			Range = rnd.Next(1, 10000);
+		}
+
+		public override string ToString()
+		{
+			return base.ToString() + $", количество пассажиров {PassengersNumber}, дальность полёта {Range}";
 		}
 
 		public override bool Equals(object obj)

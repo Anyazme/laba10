@@ -46,15 +46,27 @@ namespace laba10.Program
 			base.Init();
 
 			Console.WriteLine("Введите, пожалуйста, количество лопастей:");
-			BladesNumber = int.Parse(Console.ReadLine());
+			try
+			{
+				BladesNumber = int.Parse(Console.ReadLine());
+			}
+			catch
+			{
+				BladesNumber = 10;
+			}
 		}
 
 		public override void RandomInit()
 		{   
 			base.RandomInit();
-			Random rnd = new Random();
 			BladesNumber = rnd.Next(1, 500);
 		}
+
+		public override string ToString()
+		{
+			return $"{base.ToString()}, {BladesNumber}";
+		}
+
 
 		public override bool Equals(object obj)
 		{

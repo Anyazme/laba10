@@ -9,6 +9,7 @@ namespace laba10.Program
 	public class Fighter : Plane
 	{
 		protected string fighterClass;
+		static string [] Classes = { "Фронтовой", "Перехватчик", "Палубный", "Многофункциональный", "Тактический" };
 
 		public string FighterClass { get; set; }
 
@@ -31,16 +32,19 @@ namespace laba10.Program
 		{
 			base.Init();
 
-			Console.WriteLine("Введите, пожалуйста, класс по функциям (например,фронтовой)");
+			Console.WriteLine("Введите, пожалуйста, класс по функциям (например, фронтовой)");
 			FighterClass = Console.ReadLine();
-		}
 
+		}
 		public override void RandomInit()
 		{
 			base.RandomInit();
 
-			Random rnd = new Random();
-			FighterClass = "Класс" + rnd.Next(100);
+			FighterClass = Classes[rnd.Next(Classes.Length)];
+		}
+		public override string ToString()
+		{
+			return base.ToString() + $", класс {FighterClass}";
 		}
 
 		public override bool Equals(object obj)

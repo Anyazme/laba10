@@ -7,8 +7,8 @@ using laba10.Program;
 
 namespace laba10.Program
 {
-	public class Aircraft
-	{
+	public class Aircraft : IInit
+	{   protected Random rnd = new Random();
 		//инициализация атрибутов
 		protected string model;
 		protected int year;
@@ -84,21 +84,41 @@ namespace laba10.Program
 
 			Console.WriteLine("Введите, пожалуйста, год производства:");
 			Year = int.Parse(Console.ReadLine());
+			try
+			{
+				Year = int.Parse(Console.ReadLine());
+			}
+			catch
+			{
+				Year = 2000;
+			}
 
 			Console.WriteLine("Введите, пожалуйста, тип двигателя:");
 			Type = Console.ReadLine();
 
 			Console.WriteLine("Введите, пожалуйста, количество членов экипажа:");
-			Number = int.Parse(Console.ReadLine());
+			try
+			{
+				Number = int.Parse(Console.ReadLine());
+			}
+			catch
+			{
+				Number = 6;
+			}
 		}
 
 		public virtual void RandomInit()
 		{
-			Random rnd = new Random();
+			
 			Model = "Модель" + rnd.Next(1000);
 			Year = rnd.Next(1900, DateTime.Now.Year + 1);
 			Type = "Двигатель" + rnd.Next(100);
 			Number = rnd.Next(1, 100);
+		}
+
+		public virtual string ToString()
+		{
+			return $" {Model}, {Year}, {Type}, {Number}";
 		}
 
 		public override bool Equals(object obj)
@@ -109,6 +129,23 @@ namespace laba10.Program
 			Aircraft other = (Aircraft)obj;
 			return Model == other.Model && Year == other.Year && Type == other.Type && Number == other.Number;
 		}
+
+		public int CompareTo(object obj)
+		{
+			if (obj == null) return 1;
+
+			Aircraft otherAircraft = obj as Aircraft;
+			if (otherAircraft != null)
+			{
+				// Сравнение объектов по году
+				return this.Year.CompareTo(otherAircraft.Year);
+			}
+			else
+			{
+				throw new ArgumentException("Объект не принадлежит классу Aircraft");
+			}
+		}
+
 	}
 }
 
